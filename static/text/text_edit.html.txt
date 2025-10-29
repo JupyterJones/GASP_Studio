@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'Edit Document' if mode == 'edit' else 'New Document' }}</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background: #222; color: #eee; }
+        h1 { color: #00ffcc; }
+        a { color: #00ccff; text-decoration: none; margin-right: 10px; }
+        a:hover { text-decoration: underline; }
+        textarea { width: 100%; height: 500px; background: #111; color: #eee; border: 1px solid #555; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 14px; }
+        input[type="text"] { width: 300px; padding: 6px; background: #111; color: #eee; border: 1px solid #555; border-radius: 4px; }
+        button { background: #00ccff; border: none; color: #111; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+        button:hover { background: #00ffcc; }
+    </style>
+</head>
+<body>
+    <h1>{{ '✏️ Edit' if mode == 'edit' else '🆕 New' }} Text Document</h1>
+    <p><a href="/">🏠 Home</a> | <a href="/text">📚 All Documents</a></p>
+
+    <form method="POST">
+        {% if mode == 'new' %}
+            <p><input type="text" name="filename" placeholder="Enter filename (no extension needed)" required></p>
+        {% else %}
+            <p><strong>{{ filename }}</strong></p>
+        {% endif %}
+
+        <textarea name="content" required>{{ content }}</textarea><br><br>
+
+        <button type="submit">💾 Save</button>
+        <a href="/text" style="color:#00ccff;">⬅️ Cancel</a>
+    </form>
+</body>
+</html>
