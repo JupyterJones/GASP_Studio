@@ -160,6 +160,48 @@ def text_delete(filename):
 def text_download(filename):
     return send_from_directory(TEXT_FOLDER, filename, as_attachment=True)
 
+@app.route("/upload", methods=["POST"])
+def upload():
+    file = request.files.get("file")
+    if not file:
+        ic("No file uploaded.")
+        return redirect(url_for("index"))
+
+    filename = file.filename
+    save_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    file.save(save_path)
+
+    # Insert record into SQLite
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("INSERT INTO frames (filename, caption, created_at) VALUES (?, ?, ?)",
+              (filename, "No caption yet", datetime.datetime.now().isoformat()))
+    conn.commit()
+    conn.close()
+
+    ic(f"File uploaded: {filename}")
+    return redirect(url_for("index"))
+
+@app.route("/uploads/<path:filename>")
+def uploaded_file(filename):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
+
+@app.route("/delete/<int:frame_id>")
+def delete(frame_id):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("SELECT filename FROM frames WHERE id=?", (frame_id,))
+    row = c.fetchone()
+    if row:
+        file_path = os.path.join(UPLOAD_FOLDER, row[0])
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            ic(f"Deleted file: {row[0]}")
+    c.execute("DELETE FROM frames WHERE id=?", (frame_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("index"))
+
 # ==========================================================
 # MAIN
 # ==========================================================

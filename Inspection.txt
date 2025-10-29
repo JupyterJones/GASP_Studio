@@ -1,0 +1,44 @@
+📋 Flask Project Inspection Report
+Generated: 2025-10-29 18:38:28
+==================================================
+
+=== 🧭 ROUTES FOUND ===
+  /                              -> index
+  /assets                        -> assets_list
+  /upload                        -> upload
+  /assets/delete/<int:asset_id>  -> assets_delete
+  /uploads/<path:filename>       -> uploaded_file
+  /backgrounds/<path:filename>   -> background_file
+  /overlays/<path:filename>      -> overlay_file
+  /text                          -> text_index
+  /text/new                      -> text_new
+  /text/edit/<path:filename>     -> text_edit
+  /text/delete/<path:filename>   -> text_delete
+  /text/download/<path:filename> -> text_download
+  /projects                      -> projects_list
+  /projects/new                  -> projects_new
+  /timeline/<int:project_id>     -> timeline
+  /export/video/<int:project_id> -> export_video
+  /logs/latest                   -> logs_latest
+
+=== 🧩 HTML Templates Used ===
+  index.html
+  assets.html
+  text_index.html
+  text_edit.html
+  text_edit.html
+  projects.html
+  timeline.html
+  logs.html
+  upload.html
+
+=== 📁 Template Files Present ===
+  assets.html
+  index.html
+  logs.html
+  projects.html
+  text_edit.html
+  text_index.html
+  timeline.html
+
+✅ Inspection complete.

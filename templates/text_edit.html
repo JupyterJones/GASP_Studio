@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Documents</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background: #222; color: #eee; }
+        h1 { color: #00ffcc; }
+        a { color: #00ccff; text-decoration: none; margin-right: 10px; }
+        a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border-bottom: 1px solid #444; }
+        tr:hover { background: #333; }
+        .btn { padding: 6px 12px; background: #00ccff; color: #111; border-radius: 5px; text-decoration: none; }
+        .btn:hover { background: #00ffcc; }
+    </style>
+</head>
+<body>
+    Filename: text_edit.html
+    <h1>📖 Text Documents</h1>
+    <p><a href="/">🏠 Home</a> | <a href="/text/new" class="btn">➕ New Document</a></p>
+
+    <table>
+        <tr><th>Filename</th><th>Created</th><th>Updated</th><th>Actions</th></tr>
+        {% for doc in documents %}
+        <tr>
+            <td>{{ doc.filename }}</td>
+            <td>{{ doc.created_at }}</td>
+            <td>{{ doc.updated_at }}</td>
+            <td>
+                <a href="/text/edit/{{ doc.filename }}">✏️ Edit</a> |
+                <a href="/text/download/{{ doc.filename }}">⬇️ Download</a> |
+                <a href="/text/delete/{{ doc.filename }}" onclick="return confirm('Delete this file?')">🗑️ Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'Edit' if mode=='edit' else 'New' }} Text</title>
+    <style>
+        body { font-family: Arial; background: #222; color: #eee; padding: 30px; }
+        textarea { width: 100%; height: 500px; background: #111; color: #eee; font-family: monospace; border: 1px solid #444; border-radius: 5px; padding: 10px; }
+        input[type=text] { width: 50%; padding: 6px; background: #111; color: #eee; border: 1px solid #444; border-radius: 5px; }
+        button { padding: 10px 20px; background: #00cc99; border: none; color: #fff; border-radius: 5px; cursor: pointer; }
+        a { color: #00ccff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>Filename: text_edit.html
+    <h1>{{ '✏️ Edit' if mode=='edit' else '🆕 New' }} Text Document</h1>
+    <form method="POST">
+        {% if mode == 'new' %}
+            <p><input type="text" name="filename" placeholder="Enter filename (no extension needed)" required></p>
+        {% else %}
+            <p><strong>{{ filename }}</strong></p>
+        {% endif %}
+        <textarea name="content" required>{{ content }}</textarea><br><br>
+        <button type="submit">💾 Save</button> | <a href="/text">⬅️ Back</a>
+    </form>
+</body>
+</html>
+-->

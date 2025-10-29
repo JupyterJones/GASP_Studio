@@ -4,35 +4,47 @@
     <meta charset="UTF-8">
     <title>GSAP Studio Base</title>
     <style>
-        body { font-family: Arial; margin: 40px; background: #222; color: #eee; }
+        body { font-family: Arial, sans-serif; margin: 40px; background: #222; color: #eee; }
         h1 { color: #00ffcc; }
-        .upload-box { margin-bottom: 20px; }
-        .frame-list { display: flex; flex-wrap: wrap; gap: 15px; }
-        .frame { background: #333; padding: 10px; border-radius: 10px; width: 200px; text-align: center; }
-        img { width: 180px; height: auto; border-radius: 8px; }
-        a { color: #ff6666; text-decoration: none; }
+        a { color: #00ccff; text-decoration: none; margin-right: 15px; }
         a:hover { text-decoration: underline; }
+        .section { margin-top: 40px; }
+        .card {
+            background: #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
     <h1>🎬 GSAP Studio Base</h1>
-
-    <div class="upload-box">
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <button type="submit">Upload</button>
-        </form>
+    <p>Welcome to your animation workspace, Jack.</p>
+<p><a href="https://gsap.com/docs/v3/">GASP website</a></p>
+    <div class="section">
+        <div class="card">
+            <h2>📁 Project Tools</h2>
+            <p><a href="/text">📝 Text Editor / Documentation</a></p>
+            <p><a href="/assets">🖼️ Asset Manager</a></p>
+        </div>
     </div>
 
-    <div class="frame-list">
-        {% for frame in frames %}
-        <div class="frame">
-            <img src="{{ url_for('uploaded_file', filename=frame[1]) }}" alt="{{ frame[1] }}">
-            <p>{{ frame[1] }}</p>
-            <p><small>{{ frame[3][:19] }}</small></p>
-            <a href="/delete/{{ frame[0] }}">Delete</a>
+    <div class="section">
+        <div class="card">
+            <h2>📤 Upload</h2>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <label>Select File:</label><br>
+                <input type="file" name="file" required><br><br>
+                <label>Type:</label>
+                <select name="type">
+                    <option value="background">Background</option>
+                    <option value="overlay">Overlay</option>
+                    <option value="upload">General Upload</option>
+                </select><br><br>
+                <button type="submit">Upload</button>
+            </form>
         </div>
-        {% endfor %}
     </div>
 </body>
 </html>

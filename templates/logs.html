@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Logs</title>
+    <style>
+        body { font-family: monospace; background: #111; color: #0f0; padding: 30px; }
+        h1 { color: #00ffcc; }
+        pre {
+            background: #000;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 1px solid #333;
+        }
+        a { color: #00ccff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        select { background: #222; color: #eee; border: 1px solid #444; padding: 5px; border-radius: 5px; }
+        button { background: #00ccff; color: #111; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #00ffcc; }
+    </style>
+</head>
+<body>Filename: logs.html
+    <h1>🧾 Debug Logs</h1>
+    <p><a href="/">🏠 Home</a></p>
+
+    <form method="get" action="/logs">
+        <label>Select log file:</label>
+        <select name="file">
+            {% for log in logs %}
+                <option value="{{ log }}" {% if log == selected_log %}selected{% endif %}>{{ log }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">View</button>
+    </form>
+
+    {% if log_content %}
+        <h3>Contents of {{ selected_log }}</h3>
+        <pre>{{ log_content }}</pre>
+    {% else %}
+        <p>No log selected.</p>
+    {% endif %}
+</body>
+</html>

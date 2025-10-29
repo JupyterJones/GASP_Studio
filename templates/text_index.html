@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Documents</title>
+    <style>
+        body { font-family: Arial; background: #222; color: #eee; padding: 30px; }
+        h1 { color: #00ffcc; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border-bottom: 1px solid #444; padding: 8px; }
+        a { color: #00ccff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .actions a { margin-right: 10px; }
+    </style>
+</head>
+<body> Filename : text_index.html
+    <h1>📖 Text Documents</h1>
+    <p><a href="/text/new">➕ Create New Text File</a> | <a href="/">🏠 Home</a></p>
+    <table>
+        <tr><th>Filename</th><th>Created</th><th>Updated</th><th>Actions</th></tr>
+        {% for doc in docs %}
+        <tr>
+            <td>{{ doc[1] }}</td>
+            <td>{{ doc[2][:19] }}</td>
+            <td>{{ doc[3][:19] }}</td>
+            <td class="actions">
+                <a href="/text/edit/{{ doc[1] }}">✏️ Edit</a>
+                <a href="/text/download/{{ doc[1] }}">⬇️ Download</a>
+                <a href="/text/delete/{{ doc[1] }}" onclick="return confirm('Delete this file?')">🗑️ Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
