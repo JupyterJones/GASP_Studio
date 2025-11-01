@@ -432,8 +432,8 @@ def text_new():
         if filename_in == "":
             flash("Filename is required", "error")
             return redirect(url_for("text_new"))
-        if not filename_in.endswith(".txt"):
-            filename_in = filename_in + ".txt"
+        #if not filename_in.endswith(".txt"):
+        #    filename_in = filename_in + ".txt"
         filename_safe = secure_filename(filename_in)
         save_path = os.path.join(TEXT_DIR, filename_safe)
 

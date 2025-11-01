@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stop Motion Playback</title>
+<style>
+body { background:#cfc; margin:0; overflow:hidden; }
+.dragme { position:absolute; transition: all 0.4s ease; }
+#playBtn { position:fixed; top:10px; left:10px; z-index:999; padding:10px 20px; background:#55aaff; color:white; border:none; cursor:pointer; font-weight:bold; }
+
+#scene {
+    position: fixed;
+    width: 512px;
+    height: 768px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid #000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    overflow: hidden;
+    z-index: 5;
+    background-image: url("/static/images/scene_512.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+</style>
+</head>
+<body>
+<button id="playBtn">Play</button>
+<a href="/">HOME</a>
+<div id="scene"></div>
+
+<script>
+const layouts = {{ layouts|tojson }};
+let currentFrame = 0;
+let playing = false;
+const scene = document.getElementById("scene");
+
+async function loadLayout(filename){
+    const res = await fetch("/layouts/" + filename);
+    const data = await res.json();
+
+    // Clear existing images from the scene
+    scene.innerHTML = '';
+
+    for (let id in data) {
+        const imgData = data[id];
+        let img = document.getElementById(id);
+        if (!img) {
+            img = document.createElement("img");
+            img.id = id;
+            img.className = "dragme";
+            scene.appendChild(img);
+        }
+        img.src = "/static/images/" + imgData.src;
+        img.style.left = imgData.left + "px";
+        img.style.top = imgData.top + "px";
+        img.style.width = imgData.width + "px";
+        img.style.height = imgData.height + "px";
+        img.style.opacity = imgData.deleted ? 0.3 : 1;
+    }
+}
+
+async function playFrames(){
+    playing = true;
+    while(playing){
+        const frameFile = layouts[currentFrame];
+        await loadLayout(frameFile);
+        await new Promise(r=>setTimeout(r,500)); // 0.5 second per frame
+        currentFrame = (currentFrame + 1) % layouts.length;
+    }
+}
+
+document.getElementById("playBtn").addEventListener("click", ()=>{
+    if(!playing) playFrames();
+});
+</script>
+
+</body>
+</html>

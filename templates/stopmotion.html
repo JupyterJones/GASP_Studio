@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stop Motion Editor</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #bfb;
+        font-family: sans-serif;
+    }
+
+    /* Sidebar showing available images */
+    #sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 220px;
+        height: 100%;
+        background: #e8ffe8;
+        border-right: 2px solid #444;
+        overflow-y: auto;
+        padding: 10px;
+        box-sizing: border-box;
+        z-index: 10;
+    }
+
+    #sidebar img {
+        width: 100%;
+        margin-bottom: 10px;
+        border: 2px solid #777;
+        border-radius: 6px;
+        cursor: grab;
+        user-select: none;
+    }
+
+    /* Main scene is locked center */
+    #scene {
+        position: fixed;
+        width: 512px;
+        height: 768px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: url("/static/images/scene_512.jpg") center center no-repeat #222;
+        background-size: contain;
+        border: 3px solid #000;
+        box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        overflow: hidden;
+        z-index: 5;
+    }
+
+    .draggable {
+        position: absolute;
+        cursor: move;
+        width: 128px;
+        height: auto;
+        user-select: none;
+        transition: transform 0.1s;
+        z-index: 6;
+    }
+
+    .draggable:hover {
+        transform: scale(1.05);
+    }
+
+    #controls {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 15;
+        background: rgba(255,255,255,0.9);
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #666;
+    }
+
+    button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 8px;
+        background: #5a9;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        margin-left: 4px;
+    }
+
+    button:hover {
+        background: #48a;
+    }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+    <h3>Images</h3>
+    {% for img in images %}
+    <img src="/static/images/{{ img }}" draggable="true" ondragstart="startDrag(event)" data-img="{{ img }}">
+    {% endfor %}
+</div>
+
+<!-- Main Scene -->
+<div id="scene">
+    <div id="controls">
+        <button onclick="savePositions()">💾 Save Layout</button>
+        <a href="/play"><button>▶ Play</button></a>
+    </div>
+</div>
+
+<script>
+let currentDragged = null;
+
+// Start dragging from sidebar
+function startDrag(event) {
+    currentDragged = event.target.getAttribute("data-img");
+}
+
+// Allow dropping into scene
+const scene = document.getElementById("scene");
+scene.ondragover = (e) => e.preventDefault();
+
+scene.ondrop = (e) => {
+    e.preventDefault();
+    if (!currentDragged) return;
+
+    const rect = scene.getBoundingClientRect();
+    const x = e.clientX - rect.left - 64;
+    const y = e.clientY - rect.top - 64;
+
+    let existing = document.getElementById(currentDragged);
+    if (existing) {
+        existing.style.left = x + "px";
+        existing.style.top = y + "px";
+    } else {
+        const img = document.createElement("img");
+        img.src = "/static/images/" + currentDragged;
+        img.id = currentDragged;
+        img.className = "draggable";
+        img.style.left = x + "px";
+        img.style.top = y + "px";
+        img.onmousedown = startMove;
+        scene.appendChild(img);
+    }
+    currentDragged = null;
+};
+
+// Drag inside scene
+let dragObj = null, offsetX = 0, offsetY = 0;
+
+function startMove(e) {
+    dragObj = e.target;
+    offsetX = e.offsetX;
+    offsetY = e.offsetY;
+}
+
+document.onmousemove = (e) => {
+    if (dragObj) {
+        const rect = scene.getBoundingClientRect();
+        dragObj.style.left = (e.clientX - rect.left - offsetX) + "px";
+        dragObj.style.top = (e.clientY - rect.top - offsetY) + "px";
+    }
+};
+
+document.onmouseup = () => dragObj = null;
+
+// Save positions
+function savePositions() {
+    const positions = {};
+    document.querySelectorAll('#scene .draggable').forEach(img => {
+        positions[img.id] = {
+            top: parseFloat(img.style.top),
+            left: parseFloat(img.style.left)
+        };
+    });
+
+    fetch('/save_positions', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(positions)
+    })
+    .then(r => r.json())
+    .then(d => alert("Saved layout: " + d.file));
+}
+</script>
+</body>
+</html>

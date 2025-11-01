@@ -1,0 +1,46 @@
+2025-11-01T10:15:48.910539 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-11-01T10:15:48.917494 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-11-01T10:15:48.929033 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-11-01T10:15:52.554760 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-11-01T10:15:52.572621 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-11-01T10:15:53.541654 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-11-01T10:15:53.548369 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-11-01T10:15:53.561264 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-11-01T10:15:55.807046 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-11-01T10:15:55.825884 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-11-01T10:37:01.328720 | ic| app.py:487 in text_edit()
+    "Saved text document:": 'Saved text document:'
+    filename_safe: 'Links.txt'
+    "size:": 'size:'
+    len(content): 197
+2025-11-01T10:37:02.613023 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'Links.txt'
+2025-11-01T10:39:20.346616 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-11-01T10:39:20.353617 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-11-01T10:39:20.365914 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-11-01T10:39:20.693837 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-11-01T10:39:20.711580 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-11-01T10:40:38.120451 | ic| app.py:455 in text_new()
+    "Created new text document:": 'Created new text document:'
+    filename_safe: 'test.html'
+    "chars:": 'chars:'
+    len(content): 6690
+2025-11-01T10:40:38.692774 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'test.html'

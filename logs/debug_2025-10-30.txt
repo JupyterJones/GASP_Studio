@@ -1,0 +1,128 @@
+2025-10-30T10:02:46.544611 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T10:02:46.552629 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T10:02:46.564911 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T10:02:47.197365 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T10:02:47.253514 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T10:12:27.554815 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T10:12:27.561771 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T10:12:27.574200 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T10:12:27.869737 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T10:12:27.889112 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T10:21:20.904829 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T10:21:20.912013 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T10:21:20.926772 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T10:21:21.214635 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T10:21:21.233734 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T10:43:41.645019 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T10:43:41.652032 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T10:43:41.664716 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T10:43:41.948605 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T10:43:41.966975 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T10:52:20.554608 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T10:52:20.561678 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T10:52:20.574406 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T10:52:20.863463 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T10:52:20.884785 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T11:04:59.619821 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T11:04:59.627051 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T11:04:59.640160 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T11:05:00.197574 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T11:05:00.218095 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T11:41:26.846892 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T11:41:26.853853 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T11:41:26.866191 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T11:41:27.154809 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T11:41:27.173756 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T12:11:33.333355 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T12:11:33.341264 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T12:11:33.353784 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T12:11:33.667893 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T12:11:33.686906 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T12:20:31.644929 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T12:20:31.652042 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T12:20:31.664783 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T12:20:31.945169 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T12:20:31.964178 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T12:25:39.474606 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T12:25:39.482246 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T12:25:39.511131 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T12:25:39.841208 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T12:25:39.859626 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T23:54:53.600331 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T23:54:53.613769 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T23:54:53.625221 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T23:54:54.034125 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T23:54:54.051709 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T23:54:55.043822 | ic| app.py:88 in <module>
+    "Starting GASP/GSAP Studio Flask app (app.py)": 'Starting GASP/GSAP Studio Flask app (app.py)'
+2025-10-30T23:54:55.050706 | ic| app.py:191 in init_db()
+    "SQLite DB initialized and tables are ready.": 'SQLite DB initialized and tables are ready.'
+2025-10-30T23:54:55.062637 | ic| app.py:198 in <module>
+    "Initializing ChromaDB persistent client...": 'Initializing ChromaDB persistent client...'
+2025-10-30T23:54:55.339528 | ic| app.py:207 in <module>
+    "ChromaDB collection ready: animation_docs": 'ChromaDB collection ready: animation_docs'
+2025-10-30T23:54:55.357520 | ic| app.py:620 in <module>
+    f"App starting on http://localhost:{APP_PORT}": 'App starting on http://localhost:5300'
+2025-10-30T23:55:42.164272 | ic| app.py:487 in text_edit()
+    "Saved text document:": 'Saved text document:'
+    filename_safe: 'Links.txt'
+    "size:": 'size:'
+    len(content): 145
+2025-10-30T23:55:43.205774 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'Links.txt'

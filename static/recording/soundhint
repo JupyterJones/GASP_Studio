@@ -1,0 +1,1 @@
+ffmpeg -i third.mp4 -i This_is_day_two_of_a.mp3 -c:v copy -c:a aac -filter_complex "[1:a]apad=pad_dur=0[a]" -map 0:v -map "[a]" -y -t 33 third_output.mp4

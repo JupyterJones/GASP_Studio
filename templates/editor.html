@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stop Motion Editor</title>
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: sans-serif;
+
+    /* 1. solid colour – always there */
+    background-color: #000;
+}
+
+body:before {
+    animation: none !important;
+}
+
+/* Sidebar showing available images */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100%;
+    background: rgba(240,255,240,0.95);
+    border-right: 2px solid #444;
+    overflow-y: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+#sidebar img {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 2px solid #777;
+    border-radius: 6px;
+    cursor: grab;
+    user-select: none;
+}
+
+/* Main scene */
+#scene {
+    position: fixed;
+    width: 512px;
+    height: 768px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid #000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    overflow: hidden;
+    z-index: 5;
+    background-image: url("/static/images/scene_512.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.draggable {
+    position: absolute;
+    cursor: move;
+    width: 128px; /* Default width */
+    height: auto;
+    user-select: none;
+    transition: transform 0.1s;
+    z-index: 6;
+}
+
+.draggable img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Or 'cover' */
+    pointer-events: none; /* So clicks go to the parent div */
+}
+
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    background: rgba(255,0,0,0.6);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: nwse-resize;
+    z-index: 7;
+}
+
+.draggable:hover {
+    transform: scale(1.05);
+}
+
+#controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 15;
+    background: rgba(255,255,255,0.9);
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #666;
+}
+
+button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    background: #5a9;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+button:hover {
+    background: #48a;
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+    <h3>Images</h3>
+    {% for img in images %}
+    <img src="/static/images/{{ img }}" draggable="true" ondragstart="startDrag(event)" data-img="{{ img }}">
+    {% endfor %}
+</div>
+
+<!-- Scene -->
+<div id="scene">
+    <div id="controls">
+        <button onclick="savePositions()">💾 Save Layout</button>
+        <a href="/play"><button>▶ Play</button></a>
+    </div>
+</div>
+
+<script>
+let scene = document.getElementById("scene");
+let dragObj = null, resizeObj = null;
+let offsetX=0, offsetY=0, startX=0, startY=0, startW=0, startH=0;
+
+// --- Load initial positions from JSON ---
+const initialPositions = {{ positions|tojson }};
+for (let id in initialPositions) {
+    const imgData = initialPositions[id];
+    const wrapper = createDraggable(imgData.src, imgData.left, imgData.top, imgData.width, imgData.height);
+    wrapper.id = id;
+    scene.appendChild(wrapper);
+}
+
+// --- Sidebar drag ---
+function startDrag(event) {
+    currentDragged = event.target.getAttribute("data-img");
+}
+
+// --- Create a new draggable element ---
+function createDraggable(src, x, y, w, h) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "draggable";
+    wrapper.style.left = x + "px";
+    wrapper.style.top = y + "px";
+    if (w) wrapper.style.width = w + "px";
+    if (h) wrapper.style.height = h + "px";
+    wrapper.dataset.img = src;
+    wrapper.id = src + "_" + Math.floor(Math.random()*100000);
+
+    const img = document.createElement("img");
+    img.src = "/static/images/" + src;
+
+    const handle = document.createElement("div");
+    handle.className = "resize-handle";
+
+    wrapper.appendChild(img);
+    wrapper.appendChild(handle);
+
+    wrapper.onmousedown = startMove;
+    handle.onmousedown = startResize;
+
+    return wrapper;
+}
+
+// --- Scene drop ---
+scene.ondragover = e => e.preventDefault();
+scene.ondrop = e => {
+    e.preventDefault();
+    if (!currentDragged) return;
+    const rect = scene.getBoundingClientRect();
+    const x = e.clientX - rect.left - 64; // 64 is half of default 128 width
+    const y = e.clientY - rect.top - 64;
+    const wrapper = createDraggable(currentDragged, x, y);
+    scene.appendChild(wrapper);
+    currentDragged = null;
+};
+
+// --- Move inside scene ---
+function startMove(e) {
+    // Prevent starting a move when clicking the resize handle
+    if (e.target.classList.contains('resize-handle')) return;
+    dragObj = e.currentTarget;
+    offsetX = e.clientX - dragObj.offsetLeft;
+    offsetY = e.clientY - dragObj.offsetTop;
+}
+
+// --- Resize logic ---
+function startResize(e) {
+    e.stopPropagation(); // Prevent parent's move event
+    resizeObj = e.currentTarget.parentElement;
+    startX = e.clientX;
+    startY = e.clientY;
+    startW = resizeObj.offsetWidth;
+    startH = resizeObj.offsetHeight;
+}
+
+document.onmousemove = e => {
+    if (dragObj) {
+        dragObj.style.left = (e.clientX - offsetX) + "px";
+        dragObj.style.top = (e.clientY - offsetY) + "px";
+    } else if (resizeObj) {
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        resizeObj.style.width = (startW + dx) + "px";
+        resizeObj.style.height = (startH + dy) + "px";
+    }
+};
+
+document.onmouseup = () => {
+    dragObj = null;
+    resizeObj = null;
+};
+
+// --- Save ---
+function savePositions() {
+    const positions = {};
+    document.querySelectorAll("#scene .draggable").forEach(wrapper=>{
+        positions[wrapper.id] = {
+            src: wrapper.dataset.img,
+            left: parseFloat(wrapper.style.left),
+            top: parseFloat(wrapper.style.top),
+            width: wrapper.offsetWidth,
+            height: wrapper.offsetHeight
+        };
+    });
+    fetch('/save_positions', {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(positions)
+    }).then(r=>r.json()).then(d=>{
+        alert("Saved layout: " + d.file);
+    });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Walking Puppet Loop with Scale</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<style>
+body { margin:0; background:#222; display:flex; justify-content:center; align-items:center; height:100vh; }
+canvas { background: #333; }
+</style>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="600"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+// --- Global scale factor ---
+const scale = 0.6; // 1 = original, <1 smaller, >1 bigger
+
+// --- Load images ---
+const parts = {};
+const partFiles = {
+  torso: 'bottorso2.png',
+  head: 'head5.png',
+  upperArmL: 'botupper_arm_L.png',
+  lowerArmL: 'blank.png',
+  upperArmR: 'botupper_arm_R.png',
+  lowerArmR: 'blank.png',
+  upperLegL: 'botupperlegL.png',
+  lowerLegL: 'botlowerlegL.png',
+  upperLegR: 'botupperlegR.png',
+  lowerLegR: 'botlowerlegR.png'
+  //footL: 'botfoot_l.png'
+  //footR: 'botfoot_r.png'
+};
+
+let loaded = 0;
+const totalParts = Object.keys(partFiles).length;
+
+for (let key in partFiles) {
+  parts[key] = new Image();
+  parts[key].src = partFiles[key];
+  parts[key].onload = () => {
+    loaded++;
+    if (loaded === totalParts) init();
+  }
+}
+
+// --- Puppet definition ---
+const puppet = {
+  x: 200, y: 300, // hip position (adjusted for scale)
+  torso: { angle:0, offsetX:100, offsetY:300  },
+  head: { angle:0, offsetX:0, offsetY:-80 },
+  upperArmL: { angle:0, offsetX:-100, offsetY:-300 },
+    //upperArmL: { angle:0, offsetX:-20, offsetY:-60 },
+  lowerArmL: { angle:0, offsetX:0, offsetY:60 },
+  //
+  upperArmR: { angle:0, offsetX:-100, offsetY:-300 },
+  lowerArmR: { angle:0, offsetX:0, offsetY:60 },
+  //                    mv back -        mv up -
+  upperLegL: { angle:0, offsetX:35, offsetY:-80 },
+  lowerLegL: { angle:0, offsetX:-200, offsetY:-30 },
+  upperLegR: { angle:0, offsetX:35, offsetY:-80 },
+  lowerLegR: { angle:0, offsetX:-200, offsetY:-30 },
+
+
+};
+
+// --- Initialize walking animation ---
+function init() {
+  const speed = 1.2;
+
+  // Legs swing opposite each other
+  gsap.to(puppet.upperLegL, {angle: Math.PI/6, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+  gsap.to(puppet.lowerLegL, {angle: -Math.PI/8, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+  gsap.to(puppet.footL, {angle: Math.PI/12, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+
+  gsap.to(puppet.upperLegR, {angle: -Math.PI/6, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+  gsap.to(puppet.lowerLegR, {angle: Math.PI/8, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+  gsap.to(puppet.footR, {angle: -Math.PI/12, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+
+  // Arms swing opposite to legs
+  gsap.to(puppet.upperArmL, {angle: -Math.PI/6, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+  gsap.to(puppet.lowerArmL, {angle: -Math.PI/12, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+
+  gsap.to(puppet.upperArmR, {angle: Math.PI/6, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+  gsap.to(puppet.lowerArmR, {angle: Math.PI/12, duration:speed, yoyo:true, repeat:-1, ease:'sine.inOut'});
+
+  // Puppet forward movement loop
+  gsap.to(puppet, {
+    x: canvas.width + 100, 
+    duration: 60, 
+    repeat: -1, 
+    ease: 'linear', 
+    onRepeat: () => { puppet.x = -100; }
+  });
+
+  draw();
+}
+
+// --- Draw function ---
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // Arms
+  drawLimb(puppet.upperArmL, puppet.lowerArmL, parts.upperArmL, parts.lowerArmL);
+
+    drawLimb(puppet.upperLegL, puppet.lowerLegL, parts.upperLegL, parts.lowerLegL, parts.footL);
+
+      // Draw head
+  drawPart(parts.head, puppet.x + puppet.head.offsetX * scale, puppet.y + puppet.head.offsetY * scale, puppet.head.angle);
+  // Draw torso
+  drawPart(parts.torso, puppet.x, puppet.y, puppet.torso.angle);
+  drawLimb(puppet.upperArmR, puppet.lowerArmR, parts.upperArmR, parts.lowerArmR);
+  // Legs
+
+  drawLimb(puppet.upperLegR, puppet.lowerLegR, parts.upperLegR, parts.lowerLegR, parts.footR);
+
+  requestAnimationFrame(draw);
+}
+
+// --- Helper functions ---
+function drawLimb(upper, lower, upperImg, lowerImg, footImg) {
+  const startX = puppet.x + upper.offsetX * scale;
+  const startY = puppet.y + upper.offsetY * scale;
+
+  ctx.save();
+  ctx.translate(startX, startY);
+  ctx.rotate(upper.angle);
+  ctx.drawImage(upperImg, -upperImg.width/2 * scale, 0, upperImg.width * scale, upperImg.height * scale);
+
+  ctx.translate(0, upperImg.height * scale * .4);
+  ctx.rotate(lower.angle);
+  ctx.drawImage(lowerImg, -lowerImg.width/2 * scale, 0, lowerImg.width * scale, lowerImg.height * scale);
+
+  if (footImg) {
+    ctx.translate(0, lowerImg.height * scale);
+    ctx.rotate(footImg.angle || 0);
+    ctx.drawImage(footImg, -footImg.width/2 * scale, 0, footImg.width * scale, footImg.height * scale);
+  }
+
+  ctx.restore();
+}
+
+function drawPart(img, x, y, angle=0) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.drawImage(img, -img.width/2 * scale, -img.height/2 * scale, img.width * scale, img.height * scale);
+  ctx.restore();
+}
+</script>
+</body>
+</html>

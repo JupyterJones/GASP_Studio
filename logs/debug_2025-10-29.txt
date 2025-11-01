@@ -120,3 +120,26 @@
 2025-10-29T19:13:47.276429 | ic| app.py:258 in index_document_to_chroma()
     "Added document to Chroma:": 'Added document to Chroma:'
     filename: 'README.md.txt'
+2025-10-30T07:38:50.119723 | ic| app.py:362 in upload()
+    "Uploaded asset:": 'Uploaded asset:'
+    saved_name: 'FlaskArchitect03.png'
+    "type:": 'type:'
+    upload_type: 'overlay'
+    "size:": 'size:'
+    f"{width}x{height}": '1024x1024'
+2025-10-30T07:53:58.065588 | ic| app.py:455 in text_new()
+    "Created new text document:": 'Created new text document:'
+    filename_safe: 'Links.txt'
+    "chars:": 'chars:'
+    len(content): 97
+2025-10-30T07:53:59.176196 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'Links.txt'
+2025-10-30T07:56:52.754924 | ic| app.py:455 in text_new()
+    "Created new text document:": 'Created new text document:'
+    filename_safe: 'resources.txt'
+    "chars:": 'chars:'
+    len(content): 39
+2025-10-30T07:56:53.358788 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'resources.txt'

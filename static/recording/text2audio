@@ -1,0 +1,126 @@
+#!/home/jack/miniconda3/envs/PY39/bin/python
+
+import requests
+from icecream import ic
+import os
+import sys
+import re
+import subprocess
+
+# ----------------------
+# Configuration
+# ----------------------
+TTS_API_URL = "http://localhost:8880/v1/audio/speech"
+HEADERS = {"Content-Type": "application/json"}
+OUTPUT_DIR = "/home/jack/Desktop/GASP_Studio/static/recording"
+
+VOICES = [
+    'bf_alice', 'bf_emma', 'bf_lily', 'bf_v0emma', 'bf_v0isabella',
+    'af_alloy', 'af_aoede', 'af_bella', 'af_heart', 'af_jadzia', 'af_jessica',
+    'af_kore', 'af_nicole', 'af_nova', 'af_river', 'af_sarah', 'af_sky',
+    'af_v0', 'af_v0bella', 'af_v0irulan', 'af_v0nicole', 'af_v0sarah',
+    'af_v0sky', 'am_adam', 'am_echo', 'am_eric', 'am_fenrir', 'am_liam',
+    'am_michael', 'am_onyx', 'am_puck', 'am_santa', 'am_v0adam',
+    'am_v0gurney', 'am_v0michael', 'bm_daniel', 'bm_fable'
+]
+
+# ----------------------
+# Ensure output dir exists
+# ----------------------
+if not os.path.exists(OUTPUT_DIR):
+    os.makedirs(OUTPUT_DIR)
+    ic(f"Created output directory: {OUTPUT_DIR}")
+
+# ----------------------
+# Sanitize filename
+# ----------------------
+def sanitize_filename(text, max_length=20):
+    base = text.strip()[:max_length]
+    base = re.sub(r'\W+', '_', base)
+    return base or "output"
+
+# ----------------------
+# Get Audio Duration
+# ----------------------
+def get_audio_duration(audio_path):
+    """Returns the duration of an audio file in seconds."""
+    try:
+        result = subprocess.run(
+            [
+                "ffprobe", "-v", "error", "-show_entries",
+                "format=duration", "-of",
+                "default=noprint_wrappers=1:nokey=1", audio_path
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        duration_str = result.stdout.strip()
+        duration = float(duration_str)
+        ic(f"Duration of {audio_path}: {duration} seconds")
+        return duration
+    except Exception as e:
+        ic(f"Failed to get duration for {audio_path}: {e}")
+        return 0
+
+# ----------------------
+# TTS Generation
+# ----------------------
+def generate_tts(text, ASSISTANT_VOICE="am_adam"):
+    filename = sanitize_filename(text) + ".mp3"
+    output_path = os.path.join(OUTPUT_DIR, filename)
+
+    payload = {
+        "input": text,
+        "voice": ASSISTANT_VOICE
+    }
+
+    try:
+        ic(f"Sending TTS request using voice '{ASSISTANT_VOICE}'")
+        ic(f"Text sample: {text[:60]}...")
+        response = requests.post(TTS_API_URL, json=payload, headers=HEADERS, timeout=380)
+
+        if response.status_code == 200:
+            with open(output_path, 'wb') as f:
+                f.write(response.content)
+            ic(f"TTS audio saved: {output_path}")
+            get_audio_duration(output_path)
+            return output_path
+        else:
+            ic(f"TTS error {response.status_code}: {response.text}")
+            return None
+
+    except Exception as e:
+        ic(f"TTS request failed: {e}")
+        return None
+
+# ----------------------
+# Main
+# ----------------------
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python text2audio.py input_text_file.txt [optional_voice_name]")
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+    ASSISTANT_VOICE = sys.argv[2] if len(sys.argv) > 2 else "am_michael"
+
+    if not os.path.isfile(input_file):
+        ic(f"File not found: {input_file}")
+        sys.exit(1)
+
+    try:
+        with open(input_file, 'r', encoding='utf-8') as f:
+            text = f.read().strip()
+
+        if not text:
+            ic("Input file is empty.")
+            sys.exit(1)
+
+        ic(f"Read {len(text)} characters from {input_file}")
+        ic(f"Using voice: {ASSISTANT_VOICE}")
+        generate_tts(text, ASSISTANT_VOICE)
+
+    except Exception as e:
+        ic(f"Error reading input file: {e}")
+        sys.exit(1)
