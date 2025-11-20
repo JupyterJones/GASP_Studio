@@ -44,3 +44,59 @@
 2025-11-01T10:40:38.692774 | ic| app.py:258 in index_document_to_chroma()
     "Added document to Chroma:": 'Added document to Chroma:'
     filename: 'test.html'
+2025-11-01T22:00:01.063436 | ic| app.py:487 in text_edit()
+    "Saved text document:": 'Saved text document:'
+    filename_safe: 'Links.txt'
+    "size:": 'size:'
+    len(content): 252
+2025-11-01T22:00:01.991069 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'Links.txt'
+2025-11-01T22:07:00.116425 | ic| app.py:487 in text_edit()
+    "Saved text document:": 'Saved text document:'
+    filename_safe: 'Links.txt'
+    "size:": 'size:'
+    len(content): 305
+2025-11-01T22:07:00.924130 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'Links.txt'
+2025-11-01T22:17:59.772414 | ic| app.py:487 in text_edit()
+    "Saved text document:": 'Saved text document:'
+    filename_safe: 'Links.txt'
+    "size:": 'size:'
+    len(content): 413
+2025-11-01T22:18:00.619958 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'Links.txt'
+2025-11-01T22:36:37.480011 | ic| app.py:487 in text_edit()
+    "Saved text document:": 'Saved text document:'
+    filename_safe: 'Links.txt'
+    "size:": 'size:'
+    len(content): 595
+2025-11-01T22:36:38.264999 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'Links.txt'
+2025-11-02T06:30:31.760443 | ic| app.py:455 in text_new()
+    "Created new text document:": 'Created new text document:'
+    filename_safe: 'animated_text.html'
+    "chars:": 'chars:'
+    len(content): 2870
+2025-11-02T06:30:32.589023 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'animated_text.html'
+2025-11-02T06:32:47.619101 | ic| app.py:487 in text_edit()
+    "Saved text document:": 'Saved text document:'
+    filename_safe: 'animated_text.html'
+    "size:": 'size:'
+    len(content): 3068
+2025-11-02T06:32:48.357549 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'animated_text.html'
+2025-11-02T06:38:06.096697 | ic| app.py:487 in text_edit()
+    "Saved text document:": 'Saved text document:'
+    filename_safe: 'animated_text.html'
+    "size:": 'size:'
+    len(content): 3171
+2025-11-02T06:38:06.967748 | ic| app.py:258 in index_document_to_chroma()
+    "Added document to Chroma:": 'Added document to Chroma:'
+    filename: 'animated_text.html'

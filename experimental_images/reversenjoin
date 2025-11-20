@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Stop on error
+set -e
+
+# --- Input file ---
+INPUT="$1"
+
+if [ -z "$INPUT" ]; then
+    echo "Usage: reverseNcant input.mp4"
+    exit 1
+fi
+
+# --- Output filenames ---
+timestamp=$(date +%Y-%m-%d_%H-%M-%S)
+joined="${timestamp}_joined.mp4"
+reversed="reversed.mp4"
+listfile="concat_list.txt"
+
+# --- Reverse video ---
+# -vf reverse reverses frames
+# -af areverse reverses the audio
+ffmpeg -y -i "$INPUT" -vf reverse -af areverse "$reversed"
+
+# --- Create concat list ---
+echo "file '$INPUT'" > "$listfile"
+echo "file '$reversed'" >> "$listfile"
+
+# --- Concatenate the files ---
+ffmpeg -y -f concat -safe 0 -i "$listfile" -c copy "$joined"
+
+# --- Cleanup ---
+rm "$listfile"
+
+echo "Done!"
+echo "Reversed: $reversed"
+echo "Joined:   $joined"

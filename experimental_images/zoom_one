@@ -1,0 +1,32 @@
+#!/bin/bash
+file="$(date +%Y-%m-%d_%H-%M-%S)video.mp4"
+
+ffmpeg -hide_banner -framerate 60 -i $1 -vf \
+"scale=8000:-1,zoompan=z='zoom+0.001':x='iw/2-(iw/zoom/2)':y='0-(ih/zoom/2)':d=8*60:s=512x768:fps=60" \
+-c:v libx264 -pix_fmt yuv420p -y XXXzoom2_video.mp4 2>&1
+
+# --- Output filenames ---
+timestamp=$(date +%Y-%m-%d_%H-%M-%S)
+joined="${timestamp}_joined.mp4"
+reversed="reversed.mp4"
+listfile="concat_list.txt"
+INPUT=XXXzoom2_video.mp4
+# --- Reverse video ---
+# -vf reverse reverses frames
+# -af areverse reverses the audio
+#ffmpeg -y -i "$INPUT" -vf reverse -af areverse "$reversed"
+ffmpeg -y -i "$INPUT" -vf reverse "$reversed"
+# --- Create concat list ---
+echo "file '$INPUT'" > "$listfile"
+echo "file '$reversed'" >> "$listfile"
+
+# --- Concatenate the files ---
+ffmpeg -y -f concat -safe 0 -i "$listfile" -c copy "$joined"
+
+# --- Cleanup ---
+rm "$listfile"
+
+echo "Done!"
+echo "Reversed: $reversed"
+echo "Joined:   $joined"
+frame_zoommp4 $joined
